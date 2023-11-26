@@ -7,7 +7,7 @@
 uint16_t adc0;
 Adafruit_ADS1115 ads;
 
-int count = 0;
+int conssecutivecount = 0;
 
 volatile bool flaginitADC = false;
 
@@ -37,14 +37,23 @@ void loop()
   if (flaginitADC)
   {
 
-    // Serial.println(currentValue);
     Serial.write((uint8_t *)&currentValue, sizeof(currentValue));
-    count++;
-    if (count == 70)
+    // Serial.println(currentValue);
+
+    if (currentValue < 250)
     {
-      flaginitADC = false;
-      Serial.write(0x04);
-      count = 0;
+      conssecutivecount++;
+
+      if (conssecutivecount >= 4)
+      {
+        flaginitADC = false;
+        Serial.write(0x04);
+        conssecutivecount = 0;
+      }
+    }
+    else
+    {
+      conssecutivecount = 0;
     }
   }
 }
