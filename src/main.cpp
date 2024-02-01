@@ -27,8 +27,9 @@ void setup()
 void loop()
 {
   uint16_t currentValue = ads.readADC_SingleEnded(0);
+  // Serial.println(currentValue);
 
-  if (currentValue > 200)
+  if (currentValue > 250)
   {
 
     flaginitADC = true;
