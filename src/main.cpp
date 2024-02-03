@@ -11,6 +11,8 @@ int conssecutivecount = 0;
 
 volatile bool flaginitADC = false;
 
+// #define EMG_Visualizer
+
 void setup()
 {
   Serial.begin(115200);
@@ -21,13 +23,19 @@ void setup()
     while (1)
       ;
   }
-  // Serial.println("Initialize ADS.");
 }
 
 void loop()
 {
+
   uint16_t currentValue = ads.readADC_SingleEnded(0);
-  // Serial.println(currentValue);
+
+#ifdef EMG_Visualizer
+
+  Serial.print(">AD0:");
+  Serial.println(currentValue);
+
+#else
 
   if (currentValue > 250)
   {
@@ -39,7 +47,6 @@ void loop()
   {
 
     Serial.write((uint8_t *)&currentValue, sizeof(currentValue));
-    // Serial.println(currentValue);
 
     if (currentValue < 200)
     {
@@ -57,4 +64,5 @@ void loop()
       conssecutivecount = 0;
     }
   }
+#endif
 }
