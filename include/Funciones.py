@@ -58,6 +58,42 @@ def obtener_muestras(dataframe, dedo, rangos):
 # -------------------------------------------------------------Gráficos---------------------------------------------------------------------------------------------
 
 
+def grafico_caracteristicas(dataframe, Estadistico):
+    Estadistico = (
+        Estadistico  # Reemplaza 'nombre_columna_y' con el nombre de tu columna Y
+    )
+
+    dataframe_anular = dataframe[dataframe["Dedo"] == "Anular"]
+    dataframe_medio = dataframe[dataframe["Dedo"] == "Medio"]
+    dataframe_indice = dataframe[dataframe["Dedo"] == "Índice"]
+
+    # Crea el gráfico con Plotly Express
+    fig = px.scatter(
+        dataframe_anular,
+        y=dataframe_anular[Estadistico],
+        x=dataframe_anular.index,
+        title="Comparando valores de " + Estadistico,
+        template="plotly_dark",
+    )
+
+    fig.add_scatter(
+        x=dataframe_anular.index,
+        y=dataframe_medio[Estadistico],
+        mode="markers",
+        name=f'{Estadistico} {"Medio"}',
+    )
+    fig.add_scatter(
+        x=dataframe_anular.index,
+        y=dataframe_indice[Estadistico],
+        mode="markers",
+        name=f'{Estadistico} {"Índice"}',
+    )
+
+    fig["data"][0]["showlegend"] = True
+    fig["data"][0]["name"] = Estadistico + " Anular"
+    fig.show()
+
+
 def graficar_df(valores_graficar):
     fig = px.line(
         valores_graficar,

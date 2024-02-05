@@ -37,7 +37,7 @@ void loop()
 
 #else
 
-  if (currentValue > 250)
+  if (currentValue > 500)
   {
 
     flaginitADC = true;
@@ -48,7 +48,7 @@ void loop()
 
     Serial.write((uint8_t *)&currentValue, sizeof(currentValue));
 
-    if (currentValue < 200)
+    if (currentValue < 500)
     {
       conssecutivecount++;
 
